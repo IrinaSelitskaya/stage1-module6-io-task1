@@ -2,28 +2,28 @@ package com.epam.mjc.io;
 
 import java.io.File;
 import java.io.*;
-import java.util.Scanner;
 
 public class FileReader {
  public Profile getDataFromFile(File file) throws IOException{
-  Scanner s=null;
-  try{
-   s=new Scanner(file);
-   s.useDelimiter("\n?\\w+: ");
-   String name1=s.next();
-   int age1=s.nextInt();
-   String email1=s.next();
-   long phone1=s.nextLong();   
-   Profile p=new Profile(name1,age1,email1,phone1);
-   return p;    
-  }finally{
-   if(s!=null){
-    s.close();}
+  try(BufferedReader br = new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(file))))){
+   String l;
+   String lines=null;
+   while((l=br.readLine())!=null){
+    lines+=l+"\n";}
+   String [] pairs=lines.split("\n");
+   for(int i=0;i<pairs.length;i++){
+    pairs[i]=pairs[i].split(": ")[1];}
+   String name=pairs[0];
+   int age=Integer.parseInt(pairs[1]);
+   String email=pairs[2];
+   long phone=Long.parseLong(pairs[3]);
+   return new Profile(name,age,email,phone);
   }
- } 
- public static void main(String[] args) throws IOException{
+ }
+ public static void main(String args []) throws IOException{
   FileReader fileReader=new FileReader();
   File f=new File("Profile.txt");
   fileReader.getDataFromFile(f);
  }
-}
+} 
+  
