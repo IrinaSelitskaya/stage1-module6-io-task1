@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.*;
 
 public class FileReader {
- public Profile getDataFromFile(File file) throws IOException {
+ public Profile getDataFromFile(File file){
   try (BufferedReader br = new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(file))))){
    String l;
    String lines=null;
@@ -18,9 +18,12 @@ public class FileReader {
    String email=pairs[2];
    long phone=Long.parseLong(pairs[3]);
    return new Profile(name,age,email,phone);
+  }catch (IOException ex){
+   ex.printStackTrace();
   }
+  return null;
  }
- public static void main(String args [])throws IOException{
+ public static void main(String args []){
   FileReader fileReader=new FileReader();
   File f=new File("Profile.txt");
   fileReader.getDataFromFile(f);
