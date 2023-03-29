@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.*;
 
 public class FileReader {
- public Profile getDataFromFile(File file) throws IOException{
+ public Profile getDataFromFile(File file) throws IOException {
   try (BufferedReader br = new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(file))))){
    String l;
    String lines=null;
